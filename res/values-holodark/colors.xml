@@ -121,13 +121,13 @@
     <color name="tab_background_gradient_end_pressed_color">#333333</color>
 
     <!-- Color of the underline for a tab which is selected. -->
-    <color name="tab_underline_selected_color">#3265c1</color>
+    <color name="tab_underline_selected_color">#ffffff</color>
 
     <!-- Color of the underline for a tab which is not selected. -->
     <color name="tab_underline_color">#333333</color>
 
     <!-- Color of the selection indicator for a tab which is selected. -->
-    <color name="tab_selected_color">#3b77e7</color>
+    <color name="tab_selected_color">#ffffff</color>
 
     <!-- Color of tab text. -->
    <color name="tab_text_color">#ffffff</color>
