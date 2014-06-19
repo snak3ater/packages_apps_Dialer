@@ -32,7 +32,7 @@ LOCAL_STATIC_JAVA_LIBRARIES := \
 LOCAL_REQUIRED_MODULES := libvariablespeed
 
 LOCAL_PACKAGE_NAME := Dialer
-LOCAL_CERTIFICATE := shared
+LOCAL_CERTIFICATE := platform
 LOCAL_PRIVILEGED_MODULE := true
 
 LOCAL_PROGUARD_FLAG_FILES := proguard.flags $(incallui_dir)/proguard.flags

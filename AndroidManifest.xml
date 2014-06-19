@@ -51,6 +51,10 @@
      start requests, even if they happen immediately after the user
      presses home. -->
     <uses-permission android:name="android.permission.STOP_APP_SWITCHES" />
+    <!-- For our non intrusive stuffs -->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.INTERNAL_SYSTEM_WINDOW" />
+    <uses-permission android:name="android.permission.STATUS_BAR_SERVICE" />
 
     <application
         android:name="DialerApplication"
@@ -284,6 +288,9 @@
                 <action android:name="com.android.services.telephony.common.ICallHandlerService" />
             </intent-filter>
         </service>
+
+        <service android:name="com.android.incallui.service.NonIntrusiveService"
+                 android:process="com.android.incallui" />
 
         <!-- BroadcastReceiver for receiving Intents from Notification mechanism. -->
         <receiver android:name="com.android.incallui.InCallApp$NotificationBroadcastReceiver"
