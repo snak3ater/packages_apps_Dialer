@@ -14,10 +14,13 @@
 
 package com.android.dialer.calllog;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
 import android.provider.ContactsContract;
+import android.provider.Settings;
+import android.provider.Telephony;
 import android.provider.ContactsContract.CommonDataKinds.Phone;
 import android.provider.ContactsContract.Contacts;
 import android.provider.ContactsContract.DisplayNameSources;
@@ -32,6 +35,7 @@ import com.android.dialer.lookup.LookupCache;
 import com.android.dialer.service.CachedNumberLookupService;
 import com.android.dialer.service.CachedNumberLookupService.CachedContactInfo;
 import com.android.dialerbind.ObjectFactory;
+import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -260,6 +264,31 @@ public class ContactInfoHelper {
         }
         return PhoneNumberUtils.formatNumber(number, normalizedNumber, countryIso);
     }
+
+       /**
+	* Checks whether calls can be blacklisted; that is, whether the
+	* phone blacklist is enabled
+	*/
+	public boolean canBlacklistCalls() {
+	return Settings.System.getInt(mContext.getContentResolver(),
+	Settings.System.PHONE_BLACKLIST_ENABLED, 1) != 0;
+	}
+	/**
+	* Requests the given number to be added to the phone blacklist
+	*
+	* @param number the number to be blacklisted
+	*/
+	public void addNumberToBlacklist(String number) {
+	ContentValues cv = new ContentValues();
+	cv.put(Telephony.Blacklist.PHONE_MODE, 1);
+	Uri uri = Uri.withAppendedPath(Telephony.Blacklist.CONTENT_FILTER_BYNUMBER_URI, number);
+	int count = mContext.getContentResolver().update(uri, cv, null, null);
+	if (count != 0) {
+	// Give the user some feedback
+	String message = mContext.getString(R.string.toast_added_to_blacklist, number);
+	Toast.makeText(mContext, message, Toast.LENGTH_SHORT).show();
+	}
+}
 
     /**
      * Parses the given URI to determine the original lookup key of the contact.
